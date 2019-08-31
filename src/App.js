@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import Header from './components/Header/Header'
+import Form from './components/Form/Form'
+import Plot from './components/Plot/Plot'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = ({
+            stock: {}
+        })
+    };
+
+    getStock = (info) => {
+        console.log(info);
+        fetch(`http://127.0.0.1:7213/Stocks?stock=${info.stock}&from=${info.from}&to=${info.to}`)
+            .then(response => response.json())
+            // .then(result => console.log(result.data))
+            .then(result => this.setState ({
+                stock: result.data
+            }))
+    };
+
+    render() {
+        return (
+            <div className="App">
+                <Header/>
+                <div className="container">
+                    <Form getStock = {this.getStock}/>
+                    <Plot stock={this.state.stock}/>
+                </div>
+            </div>
+        );
+    }
+
 }
 
 export default App;
