@@ -14,7 +14,7 @@ export class App extends Component {
 
     getStock = (info) => {
         console.log(info);
-        fetch(`http://127.0.0.1:7213/Stocks?stock=${info.stock}&from=${info.from}&to=${info.to}`)
+        fetch(`http://drenr.com/Stocks?stock=${info.stock}&from=${info.from}&to=${info.to}`)
             .then(response => response.json())
             // .then(result => console.log(result.data))
             .then(result => this.setState ({
